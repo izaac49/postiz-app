@@ -22,3 +22,8 @@ dist
 .git
 .github
 reports
+node_modules
+.next
+.gitignore
+.env
+Dockerfile
