@@ -2,8 +2,11 @@
 FROM node:22-alpine AS deps
 WORKDIR /app
 RUN apk add --no-cache libc6-compat python3 make g++
+
+# Use EXACT pnpm version expected by lockfile
+RUN corepack enable && corepack prepare pnpm@9.15.0 --activate
+
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-RUN corepack enable && corepack prepare pnpm@latest --activate
 RUN pnpm install --frozen-lockfile
 
 # ---------- build ----------
