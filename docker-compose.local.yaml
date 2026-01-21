@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  postiz:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgres://postiz:postiz@db:5432/postiz
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: devsecret
+      NEXTAUTH_SECRET: devsecret
+      NEXTAUTH_URL: http://localhost:3000
+      APP_URL: http://localhost:3000
+    depends_on:
+      - db
+      - redis
+
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: postiz
+      POSTGRES_PASSWORD: postiz
+      POSTGRES_DB: postiz
+
+  redis:
+    image: redis:7
